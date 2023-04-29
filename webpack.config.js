@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const mdToHtml = require('./plugins/md-to-html');
+const FileListPlugin = require('./plugins/file-list-plugin');
 
 module.exports = {
     mode: "development",
@@ -39,9 +40,9 @@ module.exports = {
             template: './index.html'
         }),
         new mdToHtml({
-            filename: 'README.html',// 编译后生成的文件名
-            template: './README.md'
-        })
+            mdFile: './README.md'
+        }),
+        new FileListPlugin(),
     ],
     devServer: {
         static: {
