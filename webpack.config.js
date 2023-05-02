@@ -10,7 +10,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         publicPath: '/',
-        filename: 'js/bundle-[chunkhash].js'
+        filename: 'js/bundle-[contenthash].js' // contenthash，根据文件内容生成hash，文件内容没变，生成的 hash 也不会变
     },
     module: {
         rules: [
