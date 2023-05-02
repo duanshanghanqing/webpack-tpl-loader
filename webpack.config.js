@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const mdToHtml = require('./plugins/md-to-html');
 const FileListPlugin = require('./plugins/file-list-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
     mode: "development",
@@ -14,9 +15,15 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                  loader: 'babel-loader'
+                }
+            },
+            {
                 test: /\.tpl$/,
                 use: [
-                    // 'babel-loader',
                     {
                         loader: './loaders/tpl-loader', // loader 处理完成返回字符串
                         options: {
@@ -29,7 +36,7 @@ module.exports = {
     },
     devtool: 'source-map',
     resolve: {
-        extensions: ['.ts', '.js', '.json'],
+        extensions: ['.js', '.json'],
         alias: {
             '@': path.resolve(__dirname, 'src'),
         }
@@ -43,6 +50,7 @@ module.exports = {
             mdFile: './README.md'
         }),
         new FileListPlugin(),
+        new CleanWebpackPlugin(),
     ],
     devServer: {
         static: {
